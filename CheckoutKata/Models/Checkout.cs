@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace CheckoutKata.Models
 {
@@ -8,10 +8,14 @@ namespace CheckoutKata.Models
         public List<ProductCheckout> ProductCheckoutList { get; set; }
         public decimal TotalPrice { get; set; }
 
+        public Checkout()
+        {
+            ProductCheckoutList = ProductCheckoutList ?? new List<ProductCheckout>();
+        }
+
         public void Scan(string product)
         {
-            ProductCheckoutList = new List<ProductCheckout>();
-            ProductCheckoutList.Add(new ProductCheckout { SKU = "a", TimesScanned = 1 });
+            ProductCheckoutList.Add(new ProductCheckout { SKU = product, TimesScanned = 1 });
         }
     }
 }

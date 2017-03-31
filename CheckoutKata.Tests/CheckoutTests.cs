@@ -1,6 +1,5 @@
 ﻿using CheckoutKata.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace CheckoutKata.Tests
@@ -8,17 +7,22 @@ namespace CheckoutKata.Tests
     [TestClass]
     public class CheckoutTests
     {
-        private List<Product> _products;
+        private Checkout _checkout;
+
+        [TestInitialize]
+        public void Initialization()
+        {
+            _checkout = new Checkout();
+        }
 
         [TestMethod]
         public void ScanOneItem()
         {
             string sku = "a";
-            var checkout = new Checkout();
 
-            checkout.Scan(sku);
+            _checkout.Scan(sku);
 
-            var productCheckout = checkout.ProductCheckoutList.FirstOrDefault(x => x.SKU == sku);
+            var productCheckout = _checkout.ProductCheckoutList.FirstOrDefault(x => x.SKU == sku);
             Assert.IsNotNull(productCheckout);
             Assert.AreEqual(1, productCheckout.TimesScanned);
         }
