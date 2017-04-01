@@ -1,17 +1,18 @@
 ﻿using CheckoutKata.Models.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 
 namespace CheckoutKata.Models
 {
     public class Checkout : ICheckout
     {
         public List<ProductCheckout> ProductCheckoutList { get; set; }
+        private Product _product { get; set; }
 
         public Checkout()
         {
             ProductCheckoutList = ProductCheckoutList ?? new List<ProductCheckout>();
+            _product = _product ?? new Product();
         }
 
         public void Scan(string product)
@@ -26,9 +27,8 @@ namespace CheckoutKata.Models
 
         public decimal GetTotalPrice()
         {
-            var product = new Product();
             var timesScanned = ProductCheckoutList.First(x => x.SKU == "a").TimesScanned;
-            return product.Products.First(x => x.SKU == "a").UnitPrice * timesScanned;
+            return _product.Products.First(x => x.SKU == "a").UnitPrice * timesScanned;
         }
     }
 }
