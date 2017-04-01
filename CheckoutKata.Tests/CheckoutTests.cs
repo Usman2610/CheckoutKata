@@ -16,7 +16,7 @@ namespace CheckoutKata.Tests
         }
 
         [TestMethod]
-        public void ScanOneItem()
+        public void WhenIScanOneItemThenItShouldBeAddedToTheProductCheckout()
         {
             string sku = "a";
 
@@ -25,6 +25,19 @@ namespace CheckoutKata.Tests
             var productCheckout = _checkout.ProductCheckoutList.FirstOrDefault(x => x.SKU == sku);
             Assert.IsNotNull(productCheckout);
             Assert.AreEqual(1, productCheckout.TimesScanned);
+        }
+
+        [TestMethod]
+        public void WhenIScanTwoItemThenTheyShouldBeAddedToTheProductCheckout()
+        {
+            string sku = "a";
+
+            _checkout.Scan(sku);
+            _checkout.Scan(sku);
+
+            var productCheckout = _checkout.ProductCheckoutList.FirstOrDefault(x => x.SKU == sku);
+            Assert.IsNotNull(productCheckout);
+            Assert.AreEqual(2, productCheckout.TimesScanned);
         }
     }
 }
