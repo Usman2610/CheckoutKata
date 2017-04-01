@@ -34,6 +34,10 @@ namespace CheckoutKata.Models
 
             if (product.SpecialPriceQuantity == timesScanned)
                 return product.SpecialPrice;
+            else if (timesScanned == 4)
+            {
+                return product.SpecialPrice + product.UnitPrice;
+            }
             else
                 return product.UnitPrice * timesScanned;
         }
