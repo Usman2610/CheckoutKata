@@ -56,5 +56,25 @@ namespace CheckoutKata.Tests
             Assert.IsNotNull(productCheckoutItemB);
             Assert.AreEqual(1, productCheckoutItemB.TimesScanned);
         }
+
+        [TestMethod]
+        public void WhenIScanMultipleItemsInADifferentOrderMultipleTimesThenTheyShouldBeAddedToTheProductCheckout()
+        {
+            string sku = "a";
+            string b = "b";
+
+            _checkout.Scan(sku);
+            _checkout.Scan(b);
+            _checkout.Scan(sku);
+            _checkout.Scan(b);
+            _checkout.Scan(sku);
+
+            var productCheckoutItemA = _checkout.ProductCheckoutList.FirstOrDefault(x => x.SKU == sku);
+            var productCheckoutItemB = _checkout.ProductCheckoutList.FirstOrDefault(x => x.SKU == b);
+            Assert.IsNotNull(productCheckoutItemA);
+            Assert.AreEqual(3, productCheckoutItemA.TimesScanned);
+            Assert.IsNotNull(productCheckoutItemB);
+            Assert.AreEqual(2, productCheckoutItemB.TimesScanned);
+        }
     }
 }
