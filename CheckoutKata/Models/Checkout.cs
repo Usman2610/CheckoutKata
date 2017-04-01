@@ -1,4 +1,5 @@
 ﻿using CheckoutKata.Models.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,19 +28,27 @@ namespace CheckoutKata.Models
 
         public decimal GetTotalPrice()
         {
+            decimal totalPrice;
             var sku = "a";
             var product = _product.Products.First(x => x.SKU == sku);
 
             var timesScanned = ProductCheckoutList.First(x => x.SKU == sku).TimesScanned;
+            var specialPriceItemPairs = Convert.ToInt32(Math.Floor(Convert.ToDouble(timesScanned / product.SpecialPriceQuantity)));
 
-            if (product.SpecialPriceQuantity == timesScanned)
-                return product.SpecialPrice;
-            else if (timesScanned == 4)
+            if (specialPriceItemPairs > 0)
             {
-                return product.SpecialPrice + product.UnitPrice;
+                totalPrice = specialPriceItemPairs * product.SpecialPrice;
+                var nonSpecialPriceItems = timesScanned - product.SpecialPriceQuantity * specialPriceItemPairs;
+
+                if (nonSpecialPriceItems > 0)
+                    totalPrice += nonSpecialPriceItems * product.UnitPrice;
             }
             else
-                return product.UnitPrice * timesScanned;
+            {
+                totalPrice = product.UnitPrice * timesScanned;
+            }
+
+            return totalPrice;
         }
     }
 }
