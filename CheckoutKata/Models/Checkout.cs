@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using CheckoutKata.Models.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace CheckoutKata.Models
 {
-    public class Checkout
+    public class Checkout : ICheckout
     {
         public List<ProductCheckout> ProductCheckoutList { get; set; }
         public decimal TotalPrice { get; set; }
