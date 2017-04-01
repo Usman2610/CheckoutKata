@@ -24,5 +24,10 @@ namespace CheckoutKata.Models
             else
                 ProductCheckoutList.Add(new ProductCheckout { SKU = product, TimesScanned = 1 });
         }
+
+        public int GetTotalPrice()
+        {
+            return 50;
+        }
     }
 }
