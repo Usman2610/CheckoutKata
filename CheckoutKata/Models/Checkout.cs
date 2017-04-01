@@ -47,8 +47,8 @@ namespace CheckoutKata.Models
             {
                 totalPrice = product.UnitPrice * timesScanned;
             }
-
-            return totalPrice;
+            var price = ProductCheckoutList.Any(x => x.SKU == "b") && ProductCheckoutList.First(x => x.SKU == "b").TimesScanned > 0 ? _product.Products.First(x => x.SKU == "b").UnitPrice : 0;
+            return totalPrice + price;
         }
     }
 }
