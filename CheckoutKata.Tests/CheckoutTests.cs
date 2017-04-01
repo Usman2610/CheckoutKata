@@ -139,5 +139,22 @@ namespace CheckoutKata.Tests
 
             Assert.AreEqual(80, totalPrice);
         }
+
+        [TestMethod]
+        public void WhenIScanAllItemsThenTheTotalPriceShoulBeUpdated()
+        {
+            string sku = "a";
+            string b = "b";
+            string c = "c";
+            string d = "d";
+
+            _checkout.Scan(sku);
+            _checkout.Scan(b);
+            _checkout.Scan(c);
+            _checkout.Scan(d);
+            var totalPrice = _checkout.GetTotalPrice();
+
+            Assert.AreEqual(115, totalPrice);
+        }
     }
 }
