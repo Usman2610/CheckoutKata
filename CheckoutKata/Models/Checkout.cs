@@ -28,27 +28,29 @@ namespace CheckoutKata.Models
 
         public decimal GetTotalPrice()
         {
-            decimal totalPrice;
-            var sku = "a";
-            var product = _product.Products.First(x => x.SKU == sku);
+            decimal totalPrice = 0;
+            var productCheckoutList = ProductCheckoutList.Where(x => x.TimesScanned > 0).ToList();
 
-            var timesScanned = ProductCheckoutList.First(x => x.SKU == sku).TimesScanned;
-            var specialPriceItemPairs = Convert.ToInt32(Math.Floor(Convert.ToDouble(timesScanned / product.SpecialPriceQuantity)));
-
-            if (specialPriceItemPairs > 0)
+            foreach (var productCheckout in productCheckoutList)
             {
-                totalPrice = specialPriceItemPairs * product.SpecialPrice;
-                var nonSpecialPriceItems = timesScanned - product.SpecialPriceQuantity * specialPriceItemPairs;
+                var product = _product.Products.First(x => x.SKU == productCheckout.SKU);
+                var specialPriceItemPairs = Convert.ToInt32(Math.Floor(Convert.ToDouble(productCheckout.TimesScanned / product.SpecialPriceQuantity)));
 
-                if (nonSpecialPriceItems > 0)
-                    totalPrice += nonSpecialPriceItems * product.UnitPrice;
+                if (specialPriceItemPairs > 0)
+                {
+                    totalPrice += specialPriceItemPairs * product.SpecialPrice;
+                    var nonSpecialPriceItems = productCheckout.TimesScanned - product.SpecialPriceQuantity * specialPriceItemPairs;
+
+                    if (nonSpecialPriceItems > 0)
+                        totalPrice += nonSpecialPriceItems * product.UnitPrice;
+                }
+                else
+                {
+                    totalPrice += product.UnitPrice * productCheckout.TimesScanned;
+                }
             }
-            else
-            {
-                totalPrice = product.UnitPrice * timesScanned;
-            }
-            var price = ProductCheckoutList.Any(x => x.SKU == "b") && ProductCheckoutList.First(x => x.SKU == "b").TimesScanned > 0 ? _product.Products.First(x => x.SKU == "b").UnitPrice : 0;
-            return totalPrice + price;
+
+            return totalPrice;
         }
     }
 }
