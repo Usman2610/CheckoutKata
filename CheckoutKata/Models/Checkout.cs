@@ -15,7 +15,12 @@ namespace CheckoutKata.Models
 
         public void Scan(string product)
         {
-            ProductCheckoutList.Add(new ProductCheckout { SKU = product, TimesScanned = 1 });
+            var productCheckout = ProductCheckoutList.Find(x => x.SKU == product);
+
+            if (productCheckout != null)
+                productCheckout.TimesScanned += 1;
+            else
+                ProductCheckoutList.Add(new ProductCheckout { SKU = product, TimesScanned = 1 });
         }
     }
 }
