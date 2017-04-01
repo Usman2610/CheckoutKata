@@ -76,5 +76,16 @@ namespace CheckoutKata.Tests
             Assert.IsNotNull(productCheckoutItemB);
             Assert.AreEqual(2, productCheckoutItemB.TimesScanned);
         }
+
+        [TestMethod]
+        public void WhenIScanOneItemThenTheTotalPriceShoulBeUpdated()
+        {
+            string sku = "a";
+
+            _checkout.Scan(sku);
+            var totalPrice = _checkout.GetTotalPrice();
+            
+            Assert.AreEqual(50, totalPrice);
+        }
     }
 }
