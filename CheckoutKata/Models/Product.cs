@@ -39,7 +39,7 @@ namespace CheckoutKata.Models
 
             var c = new ProductData
             {
-                SKU = "a",
+                SKU = "c",
                 UnitPrice = 20,
                 SpecialPrice = 0,
                 SpecialPriceQuantity = 0
@@ -49,7 +49,7 @@ namespace CheckoutKata.Models
 
             var d = new ProductData
             {
-                SKU = "a",
+                SKU = "d",
                 UnitPrice = 15,
                 SpecialPrice = 0,
                 SpecialPriceQuantity = 0

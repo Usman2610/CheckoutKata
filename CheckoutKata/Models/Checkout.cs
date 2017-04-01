@@ -34,7 +34,10 @@ namespace CheckoutKata.Models
             foreach (var productCheckout in productCheckoutList)
             {
                 var product = _product.Products.First(x => x.SKU == productCheckout.SKU);
-                var specialPriceItemPairs = Convert.ToInt32(Math.Floor(Convert.ToDouble(productCheckout.TimesScanned / product.SpecialPriceQuantity)));
+                int specialPriceItemPairs = 0;
+
+                if (product.SpecialPriceQuantity > 0)
+                    specialPriceItemPairs = Convert.ToInt32(Math.Floor(Convert.ToDouble(productCheckout.TimesScanned / product.SpecialPriceQuantity)));
 
                 if (specialPriceItemPairs > 0)
                 {
