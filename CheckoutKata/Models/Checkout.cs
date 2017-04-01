@@ -27,12 +27,15 @@ namespace CheckoutKata.Models
 
         public decimal GetTotalPrice()
         {
-            var timesScanned = ProductCheckoutList.First(x => x.SKU == "a").TimesScanned;
+            var sku = "a";
+            var product = _product.Products.First(x => x.SKU == sku);
 
-            if (_product.Products.First(x => x.SKU == "a").SpecialPriceQuantity == timesScanned)
-                return _product.Products.First(x => x.SKU == "a").SpecialPrice;
+            var timesScanned = ProductCheckoutList.First(x => x.SKU == sku).TimesScanned;
+
+            if (product.SpecialPriceQuantity == timesScanned)
+                return product.SpecialPrice;
             else
-                return _product.Products.First(x => x.SKU == "a").UnitPrice * timesScanned;
+                return product.UnitPrice * timesScanned;
         }
     }
 }
