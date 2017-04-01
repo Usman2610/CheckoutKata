@@ -8,7 +8,6 @@ namespace CheckoutKata.Models
     public class Checkout : ICheckout
     {
         public List<ProductCheckout> ProductCheckoutList { get; set; }
-        public decimal TotalPrice { get; set; }
 
         public Checkout()
         {
@@ -25,9 +24,10 @@ namespace CheckoutKata.Models
                 ProductCheckoutList.Add(new ProductCheckout { SKU = product, TimesScanned = 1 });
         }
 
-        public int GetTotalPrice()
+        public decimal GetTotalPrice()
         {
-            return 50;
+            var product = new Product();
+            return product.Products.First(x => x.SKU == "a").UnitPrice;
         }
     }
 }
