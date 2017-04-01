@@ -39,5 +39,22 @@ namespace CheckoutKata.Tests
             Assert.IsNotNull(productCheckout);
             Assert.AreEqual(2, productCheckout.TimesScanned);
         }
+
+        [TestMethod]
+        public void WhenIScanMultipleItemsThenTheyShouldBeAddedToTheProductCheckout()
+        {
+            string sku = "a";
+            string b = "b";
+
+            _checkout.Scan(sku);
+            _checkout.Scan(b);
+
+            var productCheckoutItemA = _checkout.ProductCheckoutList.FirstOrDefault(x => x.SKU == sku);
+            var productCheckoutItemB = _checkout.ProductCheckoutList.FirstOrDefault(x => x.SKU == b);
+            Assert.IsNotNull(productCheckoutItemA);
+            Assert.AreEqual(1, productCheckoutItemA.TimesScanned);
+            Assert.IsNotNull(productCheckoutItemB);
+            Assert.AreEqual(1, productCheckoutItemB.TimesScanned);
+        }
     }
 }
